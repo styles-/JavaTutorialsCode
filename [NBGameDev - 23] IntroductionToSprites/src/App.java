@@ -27,16 +27,16 @@ public class App {
 
 	public void loadImages() {
 		background = new ImageIcon("background.png").getImage();
-		Image tri1 = new ImageIcon("triangle1.png").getImage();
-		Image tri2 = new ImageIcon("triangle2.png").getImage();
+		Image sprite1 = new ImageIcon("sprite1.png").getImage();
+		Image sprite2 = new ImageIcon("sprite2.png").getImage();
 
 		animation = new Animation();
-		animation.addScene(tri1, 250);
-		animation.addScene(tri2, 250);
+		animation.addScene(sprite1, 250);
+		animation.addScene(sprite2, 250);
 
 		sprite = new Sprite(animation);
-		sprite.setxVelocity(0.5f);
-		sprite.setyVelocity(0.5f);
+		sprite.setxVelocity(1f);
+		sprite.setyVelocity(1f);
 
 	}
 
@@ -60,7 +60,7 @@ public class App {
 		while (cummulativeTime - startingTime < 5000) {
 			long timePassed = System.currentTimeMillis() - cummulativeTime;
 			cummulativeTime += timePassed;
-			// animation.update(timePassed);
+			//animation.update(timePassed);
 			update(timePassed);
 
 			// draw and update screen
@@ -80,26 +80,23 @@ public class App {
 	private void update(long timePassed) {
 		if (sprite.getxPosition() <= 0) {
 			sprite.setxVelocity(Math.abs(sprite.getxVelocity()));
-		} else if (sprite.getxPosition() + sprite.getWidth() >= screen
-				.getWidth()) {
+		} else if (sprite.getxPosition() + sprite.getWidth() >= screen.getWidth()) {
 			sprite.setxVelocity(-Math.abs(sprite.getxVelocity()));
 		}
-
+		
 		if (sprite.getyPosition() <= 0) {
 			sprite.setyVelocity(Math.abs(sprite.getyVelocity()));
-		} else if (sprite.getyPosition() + sprite.getHeight() >= screen
-				.getHeight()) {
+		} else if (sprite.getyPosition() + sprite.getHeight() >= screen.getHeight()) {
 			sprite.setyVelocity(-Math.abs(sprite.getyVelocity()));
 		}
-
+		
 		sprite.update(timePassed);
 	}
 
 	public void draw(Graphics graphics) {
-		graphics.drawImage(background, 0, 0, null);
-		// graphics.drawImage(animation.getImage(), 0, 0, null);
-		graphics.drawImage(sprite.getImage(),
-				Math.round(sprite.getxPosition()),
-				Math.round(sprite.getyPosition()), null);
+		graphics.drawImage(background, 0, 0, screen.getWidth(),
+				screen.getHeight(), null);
+		//graphics.drawImage(animation.getImage(), 0, 0, null);
+		graphics.drawImage(sprite.getImage(), Math.round(sprite.getxPosition()), Math.round(sprite.getyPosition()), null);
 	}
 }
